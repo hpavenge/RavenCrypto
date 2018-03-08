@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CryptoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chances">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExchangeToSell" Type="varchar" MaxLength="50" />
+          <Property Name="ExchangeToBuy" Type="varchar" MaxLength="50" />
+          <Property Name="Difference" Type="float" />
+          <Property Name="SellPrice" Type="float" />
+          <Property Name="BuyPrice" Type="float" />
+          <Property Name="Market" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CryptoMarkets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="market" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="varchar" MaxLength="50" />
+          <Property Name="buyPrice" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ExchangeDb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="exch_id" Type="varchar" MaxLength="50" />
+          <Property Name="exch_name" Type="varchar" MaxLength="50" />
+          <Property Name="exch_code" Type="varchar" MaxLength="50" />
+          <Property Name="exch_fee" Type="varchar" MaxLength="50" />
+          <Property Name="exch_trade_enabled" Type="varchar" MaxLength="50" />
+          <Property Name="exch_balance_enabled" Type="varchar" MaxLength="50" />
+          <Property Name="exch_url" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="MarketPairsDistinct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="market" Type="varchar" MaxLength="50" />
+          <Property Name="count" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="markets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="market" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MarketsDb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="exch_id" Type="varchar" MaxLength="250" />
+          <Property Name="exch_code" Type="varchar" MaxLength="50" />
+          <Property Name="mkt_id" Type="varchar" MaxLength="50" />
+          <Property Name="mkt_name" Type="varchar" MaxLength="50" />
+          <Property Name="exchmkt_id" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PriceDb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="exchange" Type="varchar" MaxLength="50" />
+          <Property Name="market" Type="varchar" MaxLength="50" />
+          <Property Name="last_trade" Type="varchar" MaxLength="250" />
+          <Property Name="high_trade" Type="varchar" MaxLength="250" />
+          <Property Name="low_trade" Type="varchar" MaxLength="250" />
+          <Property Name="current_volume" Type="varchar" MaxLength="250" />
+          <Property Name="timestamp" Type="varchar" MaxLength="250" />
+          <Property Name="ask" Type="varchar" MaxLength="250" />
+          <Property Name="bid" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityContainer Name="CryptoDBModelStoreContainer">
+          <EntitySet Name="Chances" EntityType="Self.Chances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CryptoMarkets" EntityType="Self.CryptoMarkets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExchangeDb" EntityType="Self.ExchangeDb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarketPairsDistinct" EntityType="Self.MarketPairsDistinct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="markets" EntityType="Self.markets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarketsDb" EntityType="Self.MarketsDb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PriceDb" EntityType="Self.PriceDb" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CryptoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CryptoMarket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="market" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="buyPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="CryptoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CryptoMarkets" EntityType="Self.CryptoMarket" />
+          <EntitySet Name="markets" EntityType="CryptoDBModel.market" />
+          <EntitySet Name="Chances" EntityType="CryptoDBModel.Chance" />
+          <EntitySet Name="ExchangeDbs" EntityType="CryptoDBModel.ExchangeDb" />
+          <EntitySet Name="MarketsDbs" EntityType="CryptoDBModel.MarketsDb" />
+          <EntitySet Name="PriceDbs" EntityType="CryptoDBModel.PriceDb" />
+          <EntitySet Name="MarketPairsDistincts" EntityType="CryptoDBModel.MarketPairsDistinct" />
+        </EntityContainer>
+        <EntityType Name="market">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="market1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Chance">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="ExchangeToSell" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExchangeToBuy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Difference" Type="Double" />
+          <Property Name="SellPrice" Type="Double" />
+          <Property Name="BuyPrice" Type="Double" />
+          <Property Name="Market" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ExchangeDb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="exch_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exch_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exch_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exch_fee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exch_trade_enabled" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exch_balance_enabled" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exch_url" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MarketsDb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="exch_id" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="exch_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mkt_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mkt_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="exchmkt_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PriceDb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="exchange" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="market" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_trade" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="high_trade" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="low_trade" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="current_volume" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ask" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="bid" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MarketPairsDistinct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="market" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CryptoDBModelStoreContainer" CdmEntityContainer="CryptoDBEntities">
+          <EntitySetMapping Name="CryptoMarkets">
+            <EntityTypeMapping TypeName="CryptoDBModel.CryptoMarket">
+              <MappingFragment StoreEntitySet="CryptoMarkets">
+                <ScalarProperty Name="buyPrice" ColumnName="buyPrice" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="market" ColumnName="market" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="markets">
+            <EntityTypeMapping TypeName="CryptoDBModel.market">
+              <MappingFragment StoreEntitySet="markets">
+                <ScalarProperty Name="market1" ColumnName="market" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chances">
+            <EntityTypeMapping TypeName="CryptoDBModel.Chance">
+              <MappingFragment StoreEntitySet="Chances">
+                <ScalarProperty Name="Market" ColumnName="Market" />
+                <ScalarProperty Name="BuyPrice" ColumnName="BuyPrice" />
+                <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+                <ScalarProperty Name="Difference" ColumnName="Difference" />
+                <ScalarProperty Name="ExchangeToBuy" ColumnName="ExchangeToBuy" />
+                <ScalarProperty Name="ExchangeToSell" ColumnName="ExchangeToSell" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExchangeDbs">
+            <EntityTypeMapping TypeName="CryptoDBModel.ExchangeDb">
+              <MappingFragment StoreEntitySet="ExchangeDb">
+                <ScalarProperty Name="exch_url" ColumnName="exch_url" />
+                <ScalarProperty Name="exch_balance_enabled" ColumnName="exch_balance_enabled" />
+                <ScalarProperty Name="exch_trade_enabled" ColumnName="exch_trade_enabled" />
+                <ScalarProperty Name="exch_fee" ColumnName="exch_fee" />
+                <ScalarProperty Name="exch_code" ColumnName="exch_code" />
+                <ScalarProperty Name="exch_name" ColumnName="exch_name" />
+                <ScalarProperty Name="exch_id" ColumnName="exch_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MarketsDbs">
+            <EntityTypeMapping TypeName="CryptoDBModel.MarketsDb">
+              <MappingFragment StoreEntitySet="MarketsDb">
+                <ScalarProperty Name="exchmkt_id" ColumnName="exchmkt_id" />
+                <ScalarProperty Name="mkt_name" ColumnName="mkt_name" />
+                <ScalarProperty Name="mkt_id" ColumnName="mkt_id" />
+                <ScalarProperty Name="exch_code" ColumnName="exch_code" />
+                <ScalarProperty Name="exch_id" ColumnName="exch_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceDbs">
+            <EntityTypeMapping TypeName="CryptoDBModel.PriceDb">
+              <MappingFragment StoreEntitySet="PriceDb">
+                <ScalarProperty Name="bid" ColumnName="bid" />
+                <ScalarProperty Name="ask" ColumnName="ask" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="current_volume" ColumnName="current_volume" />
+                <ScalarProperty Name="low_trade" ColumnName="low_trade" />
+                <ScalarProperty Name="high_trade" ColumnName="high_trade" />
+                <ScalarProperty Name="last_trade" ColumnName="last_trade" />
+                <ScalarProperty Name="market" ColumnName="market" />
+                <ScalarProperty Name="exchange" ColumnName="exchange" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MarketPairsDistincts">
+            <EntityTypeMapping TypeName="CryptoDBModel.MarketPairsDistinct">
+              <MappingFragment StoreEntitySet="MarketPairsDistinct">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="market" ColumnName="market" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
